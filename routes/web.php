@@ -15,4 +15,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'PublicController@index')->name('home');
 Route::get('/register', 'PublicController@create')->name('register');
+Route::POST('/register', 'PublicController@store')->name('register.store');
 Auth::routes(['register' => false]);

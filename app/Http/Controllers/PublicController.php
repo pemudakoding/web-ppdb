@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\DetailWeb;
+
+use App\Helpers\WebHelper;
+
 class PublicController extends Controller
 {
 
@@ -15,16 +19,32 @@ class PublicController extends Controller
      */
     public function index()
     {
-        return view('pages.public.home');
+
+        $webInformation = WebHelper::public();
+
+        return view('pages.public.home')->with([
+            'webInformation' => $webInformation
+        ]);
     }
 
     public function create()
     {
+
         $month = [
             'January', 'Februari', 'Mei', 'Maret',
             'April', 'Mei', 'Juni', 'Juli',
             'Agustus', 'September', 'Oktober', 'November', 'Desember'
         ];
-        return view('pages.public.register')->with('month', $month);
+
+        $webInformation = WebHelper::public();
+
+        return view('pages.public.register')->with([
+            'month' => $month,
+            'webInformation' => $webInformation
+        ]);
+    }
+
+    public function store(Request $request)
+    {
     }
 }

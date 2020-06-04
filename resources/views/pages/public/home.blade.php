@@ -6,9 +6,8 @@
         <div class="left text-white w-full md:w-7/12">
             <section id="title ">
                 <h1 class="font-fredoka text-4xl md:text-3xl lg:text-6xl  text-center md:text-left">Selamat Datang di</h1>
-                <h2 class="font-fredoka text-xl md:text-2xl lg:text-4xl -mt-1 md:-mt-4  text-center md:text-left">PPDB - SMP NEGERI 15 PALU</h2>
-                <p class="paragraph font-semibold text-sm text-gray-300 text-center mt-1 md:mt-0 md:text-left">Sekolah rujukan dan penyelenggara
-                    olahraga</p>
+                <h2 class="font-fredoka text-xl md:text-2xl lg:text-4xl -mt-1 md:-mt-4  text-center md:text-left">PPDB - {{$webInformation->name}}</h2>
+                <p class="paragraph font-semibold text-sm text-gray-300 text-center mt-1 md:mt-0 md:text-left">{{$webInformation->description}}</p>
             </section>
             <section id="button" class="mt-8 text-center md:text-left">
                 <a href="{{route('register')}}" class="shadow px-12 py-2 bg-blue-600 hover:bg-blue-700 transition-all duration-100 rounded font-bold">Daftar</a>
