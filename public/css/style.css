@@ -1,0 +1,16 @@
+.font-fredoka {
+    font-family: 'Fredoka One',
+        cursive;
+}
+
+#hero {
+    background: linear-gradient(90deg, rgba(34, 34, 176, 1) 16%, rgba(101, 146, 255, 1) 100%);
+}
+
+.h-full {
+    height: 100vh;
+}
+
+.bg-blue-50 {
+    background: #daddff;
+}
