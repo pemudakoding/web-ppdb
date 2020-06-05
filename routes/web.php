@@ -15,5 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'PublicController@index')->name('home');
 Route::get('/register', 'PublicController@create')->name('register');
-Route::POST('/register', 'PublicController@store')->name('register.store');
+Route::post('/register', 'PublicController@store')->name('register.store');
+Route::get('/cetak/{no_pendaftaran}', 'PublicController@cetakPsb')->name('register.cetak');
 Auth::routes(['register' => false]);

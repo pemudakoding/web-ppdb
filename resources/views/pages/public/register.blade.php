@@ -8,12 +8,13 @@
         </section>
     </div>
 </section>
-<section id='form' class="bg-blue-50 pb-16 ">
+<section id='form' class="bg-blue-50 pb-48 ">
     <div class="container mx-auto  md:px-32 ">
-        <section id="form-register" class="relative  flex justify-center h-full">
+        <section id="form-register" class="relative flex justify-center h-full">
             <section id="siswa" class="py-8 px-5 w-11/12 md:w-3/4  mx-auto shadow-lg bg-white rounded-md absolute -mt-16">
                 <form action="{{route('register.store')}}" method="POST">
                     @csrf
+                    @include('components.alert')
                     <div class="md:flex mb-2 ">
                         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                             <label for="nama_asli" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
@@ -69,6 +70,7 @@
                                 <select
                                     class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-gray-500"
                                     id="bulan_lahir"
+                                    name="bulan_lahir"
                                     class="bulan_lahir">
                                     <option value="">Pilih Bulan</option>
                                     @foreach ($month as $row)
@@ -123,7 +125,7 @@
                                     id="jenis_kelamin"
                                     name="jenis_kelamin">
                                     <option value="">Pilih Jenis Kelamin</option>
-                                    <option value="laki-laki">Laki-Laki</option>
+                                    <option value="Laki-Laki">Laki-Laki</option>
                                     <option value="Perempuan">Perempuan</option>
                                 </select>
                                 <div
@@ -192,6 +194,19 @@
                                     </svg>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="md:flex mb-2">
+                        <div class="w-full md:w-1/1 px-3 mb-6 md:mb-0">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                for="alamat">
+                                Alamat
+                            </label>
+                            <input
+                                class="appearance-none block w-full bg-gray-200 text-gray-700  rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
+                                type="text"
+                                name="alamat"
+                                id="alamat">
                         </div>
                     </div>
                     <div class="md:flex mb-2">
