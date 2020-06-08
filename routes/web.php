@@ -19,4 +19,11 @@ Route::post('/register', 'PublicController@store')->name('register.store');
 Route::get('/cetak/{no_pendaftaran}', 'PublicController@cetakPsb')->name('register.cetak');
 Route::get('/register-info', 'PublicController@checkRegister')->name('register.info');
 Route::POST('/register-info', 'PublicController@getRegisterData')->name('register.getData');
-Auth::routes(['register' => false]);
+
+route::get('logouts', function () {
+    Auth::logout();
+});
+Route::prefix('administrator-' . date('d'))->group(function () {
+    Route::get('', 'Admin\DashboardController@index')->middleware('can:ppdb')->name('admin.dashboard');
+    Auth::routes(['register' => false]);
+});

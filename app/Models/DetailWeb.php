@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Helpers\WebHelper;
+
 class DetailWeb extends Model
 {
 
@@ -11,11 +13,11 @@ class DetailWeb extends Model
 
     public function getLogoAttribute($value)
     {
-        return 'https://smp15palu.sch.id/storage/' . $value;
+        return WebHelper::$cmsUrl . 'storage/' . $value;
     }
 
     public function getFaviconAttribute($value)
     {
-        return 'https://smp15palu.sch.id/storage/' . $value;
+        return WebHelper::$cmsUrl . 'storage/' . $value;
     }
 }

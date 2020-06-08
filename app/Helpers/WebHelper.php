@@ -8,6 +8,7 @@ use phpDocumentor\Reflection\Types\Null_;
 
 class WebHelper
 {
+    public static $cmsUrl = 'https://smp15palu.sch.id/';
     public static function public()
     {
         return DetailWeb::first();
