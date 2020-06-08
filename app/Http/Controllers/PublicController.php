@@ -6,9 +6,12 @@ use Illuminate\Http\Request;
 
 use App\Models\DetailWeb;
 use App\Models\CalonSiswa;
+use App\Models\ZonaSekolah;
 
 
 use App\Helpers\WebHelper;
+
+
 
 class PublicController extends Controller
 {
@@ -39,11 +42,19 @@ class PublicController extends Controller
         ];
 
         $webInformation = WebHelper::public();
+        $zonaSekolah = ZonaSekolah::select('nama_zona')->get();
 
-        return view('pages.public.register')->with([
-            'month' => $month,
-            'webInformation' => $webInformation
-        ]);
+        if (date('d') != '17') {
+            return view('pages.public.register')->with([
+                'month' => $month,
+                'webInformation' => $webInformation,
+                'zonaSekolah' => $zonaSekolah
+            ]);
+        } else {
+            return view('pages.public.comingSoon')->with([
+                'webInformation' => $webInformation
+            ]);
+        }
     }
 
     public function store(Request $request)
@@ -56,11 +67,11 @@ class PublicController extends Controller
             'tahun_lahir'   => 'required|string',
             'jenis_kelamin' => 'required|in:Laki-Laki,Perempuan',
             'agama'     => 'required|in:Islam,Kristen,Katolik,Hindu,Budha,Khong Hu Cu',
-            'kelurahan' => 'required|string',
+            'kelurahan' => 'required|string|exists:zona_sekolahs,nama_zona',
             'kelurahan_lainnya' => 'nullable|string',
             'alamat' => 'required|string',
-            'nisn'  => 'required|min:10|max:10',
-            'nik'   => 'required|min:16|max:16',
+            'nisn'  => 'required|min:10|max:10|unique:calon_siswas',
+            'nik'   => 'required|min:16|max:16|unique:calon_siswas',
             'no_kk' => 'required|min:16|max:16',
             'no_hp' => 'required|string',
             'sekolah_asal'   => 'required|string',
@@ -93,6 +104,7 @@ class PublicController extends Controller
 
     public function cetakPsb($no_pendaftaran)
     {
+
         $dataPendaftar = CalonSiswa::where('nomor_pendaftaran', $no_pendaftaran)->firstOrFail();
         $webInformation = WebHelper::public();
 
@@ -100,5 +112,61 @@ class PublicController extends Controller
             'dataPendaftar' => $dataPendaftar,
             'webInformation' => $webInformation
         ]);
+    }
+
+    public function checkRegister()
+    {
+        $webInformation = WebHelper::public();
+
+        $totalRegister  = CalonSiswa::whereIn('kelurahan', function ($query) {
+            $query->select('nama_zona')
+                ->from('zona_sekolahs');
+        })->count();
+        $totalDiterima  = CalonSiswa::whereIn('kelurahan', function ($query) {
+            $query->select('nama_zona')
+                ->from('zona_sekolahs');
+        })->where('status', 'Diterima')->count();
+        $totalMale    = CalonSiswa::whereIn('kelurahan', function ($query) {
+            $query->select('nama_zona')
+                ->from('zona_sekolahs');
+        })->where('jenis_kelamin', 'Laki-Laki')->count();
+        $totalFemale  = CalonSiswa::whereIn('kelurahan', function ($query) {
+            $query->select('nama_zona')
+                ->from('zona_sekolahs');
+        })->where('jenis_kelamin', 'Perempuan')->count();
+
+
+        $totalPendaftarWilayah = CalonSiswa::whereIn('kelurahan', function ($query) {
+            $query->select('nama_zona')
+                ->from('zona_sekolahs');
+        })->groupBy('kelurahan')->selectRaw('count(kelurahan) as total, kelurahan')
+            ->get();
+
+
+        return view('pages.public.checkRegister')->with([
+            'webInformation' => $webInformation,
+            'totalDiterima' => $totalDiterima,
+            'totalRegister' => $totalRegister,
+            'totalMale' => $totalMale,
+            'totalFemale' => $totalFemale,
+            'totalPendaftarWilayah' => $totalPendaftarWilayah
+        ]);
+    }
+
+    public function getRegisterData(Request $request)
+    {
+
+        $data = CalonSiswa::select('nomor_pendaftaran', 'nama_asli', 'status')->where('nomor_pendaftaran', $request->nomor_pendaftaran)->first();
+        if ($data != NULL) {
+            return redirect()->route('register.info')->with([
+                'data_pendaftar' => $data,
+                'status' => 'success',
+            ]);
+        } else {
+            return redirect()->route('register.info')->with([
+                'nomor_pendaftaran' => strip_tags($request->nomor_pendaftaran),
+                'status' => 'fail',
+            ]);
+        }
     }
 }

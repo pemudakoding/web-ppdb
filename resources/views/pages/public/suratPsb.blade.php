@@ -201,8 +201,8 @@
     </style>
 
 </head>
-{{-- onload="window.print()" --}}
-<body >
+
+<body onload="window.print()">
 
     <div class="header-ket">
         <div class="left-logo">
@@ -237,7 +237,7 @@
                 <p>NO: {{$dataPendaftar->nomor_pendaftaran}}</p>
             </div>
             <div class="right-content">
-                <div><img src=""></div>
+                <div>{!! QrCode::size(130)->generate($dataPendaftar->nomor_pendaftaran); !!}</div>
             </div>
         </div>
     </div>
@@ -253,7 +253,7 @@
                 <td>2.</td>
                 <td>Tanggal Lahir</td>
                 <td>:</td>
-                <td>{{$dataPendaftar->tanggal_lahir}}</td>
+                <td>{{$dataPendaftar->tanggal_lahir['tanggal']}}-{{$dataPendaftar->tanggal_lahir['bulan']}}-{{$dataPendaftar->tanggal_lahir['tahun']}}</td>
             </tr>
             <tr>
                 <td>3.</td>
@@ -263,34 +263,49 @@
             </tr>
             <tr>
                 <td>4.</td>
+                <td>NISN</td>
+                <td>:</td>
+                <td>{{$dataPendaftar->nisn}}</td>
+            </tr>
+            <tr>
+                <td>5.</td>
                 <td>Jenis Kelamin</td>
                 <td>:</td>
                 <td>{{$dataPendaftar->jenis_kelamin}}</td>
             </tr>
             <tr>
-                <td>5.</td>
+                <td>6.</td>
                 <td>Agama</td>
                 <td>:</td>
                 <td>{{$dataPendaftar->agama}}</td>
             </tr>
             <tr>
-                <td>6.</td>
+                <td>7.</td>
                 <td>Sekolah Asal</td>
                 <td>:</td>
                 <td>{{$dataPendaftar->sekolah_asal}}</td>
             </tr>
             <tr>
-                <td>7.</td>
+                <td>8.</td>
                 <td>Alamat</td>
                 <td>:</td>
                 <td>{{$dataPendaftar->alamat}}</td>
             </tr>
             <tr>
-                <td>8</td>
+                <td>9</td>
                 <td>Kelurahan</td>
                 <td>:</td>
                 <td>{{$dataPendaftar->kelurahan}}</td>
             </tr>
+            @if ($dataPendaftar->status_sekolah == 'Negeri' && $dataPendaftar->agama == 'Islam')
+                <tr>
+                    <td>10</td>
+                    <td>Nomor BTQ</td>
+                    <td>:</td>
+                    <td>{{$dataPendaftar->nomor_btq}}</td>
+                </tr>
+            @endif
+
         </table>
     </div>
     <div class="ttd">

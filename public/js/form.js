@@ -67,7 +67,7 @@ submitBtn.onclick = (element) => {
 
             input.classList.add('border');
             input.classList.add('border-red-400');
-            console.log(input);
+
 
             input.onclick = (e) => {
                 input.classList.remove('border');

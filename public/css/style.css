@@ -14,3 +14,11 @@
 .bg-blue-50 {
     background: #daddff;
 }
+
+.alert {
+    z-index: 9999999;
+}
+
+.close-alert {
+    display: none;
+}

@@ -4,7 +4,7 @@
 <section id="hero">
     <div class="container mx-auto">
         <section class="h-56 flex justify-center box-border pt-16">
-            <h1 class="text-3xl font-fredoka text-white">Form Pendaftaran</h1>
+            <h1 class="text-3xl font-fredoka text-white">Form Pendaftaran/h1>
         </section>
     </div>
 </section>
@@ -178,12 +178,10 @@
                                     class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-gray-500"
                                     id="kelurahan"
                                     name="kelurahan">
-                                    <option value="">Pilih Kelurahan</option>
-                                    <option value="Besusu Barat">Besusu Barat</option>
-                                    <option value="Talise">Talise</option>
-                                    <option value="Baru">Baru</option>
-                                    <option value="Ujuna">Ujuna</option>
-                                    <option value="Lainnya">Lainnya</option>
+                                    <option>Pilih Kelurahan</option>
+                                    @foreach ($zonaSekolah as $zona)
+                                        <option value="{{$zona->nama_zona}}">{{$zona->nama_zona}}</option>
+                                    @endforeach
                                 </select>
                                 <div
                                     class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">

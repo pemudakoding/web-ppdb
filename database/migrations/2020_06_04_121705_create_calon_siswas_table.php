@@ -30,6 +30,7 @@ class CreateCalonSiswasTable extends Migration
             $table->string('sekolah_asal');
             $table->enum('status_sekolah', ['Negeri', 'Swasta']);
             $table->string('nomor_btq')->nullable();
+            $table->enum('status', ['Diterima', 'Pending', 'Ditolak']);
             $table->timestamps();
         });
     }

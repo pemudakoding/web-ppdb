@@ -11,7 +11,7 @@
             </section>
             <section id="button" class="mt-8 text-center md:text-left">
                 <a href="{{route('register')}}" class="shadow px-12 py-2 bg-blue-600 hover:bg-blue-700 transition-all duration-100 rounded font-bold">Daftar</a>
-                <a href="#" class="shadow ml-4 px-8 py-2  hover:bg-white hover:text-blue-600 transition-all duration-100 rounded font-bold">Cek Status</a>
+                <a href="#" class="shadow ml-4 px-8 py-2  hover:bg-white hover:text-blue-600 transition-all duration-100 rounded font-bold">Cek Pendaftar</a>
             </section>
 
         </div>
