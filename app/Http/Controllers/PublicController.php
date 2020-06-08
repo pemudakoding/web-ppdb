@@ -117,28 +117,13 @@ class PublicController extends Controller
     {
         $webInformation = WebHelper::public();
 
-        $totalRegister  = CalonSiswa::whereIn('kelurahan', function ($query) {
-            $query->select('nama_zona')
-                ->from('zona_sekolahs');
-        })->count();
-        $totalDiterima  = CalonSiswa::whereIn('kelurahan', function ($query) {
-            $query->select('nama_zona')
-                ->from('zona_sekolahs');
-        })->where('status', 'Diterima')->count();
-        $totalMale    = CalonSiswa::whereIn('kelurahan', function ($query) {
-            $query->select('nama_zona')
-                ->from('zona_sekolahs');
-        })->where('jenis_kelamin', 'Laki-Laki')->count();
-        $totalFemale  = CalonSiswa::whereIn('kelurahan', function ($query) {
-            $query->select('nama_zona')
-                ->from('zona_sekolahs');
-        })->where('jenis_kelamin', 'Perempuan')->count();
+        $totalRegister  = CalonSiswa::count();
+        $totalDiterima  = CalonSiswa::where('status', 'Diterima')->count();
+        $totalMale    = CalonSiswa::where('jenis_kelamin', 'Laki-Laki')->count();
+        $totalFemale  = CalonSiswa::where('jenis_kelamin', 'Perempuan')->count();
 
 
-        $totalPendaftarWilayah = CalonSiswa::whereIn('kelurahan', function ($query) {
-            $query->select('nama_zona')
-                ->from('zona_sekolahs');
-        })->groupBy('kelurahan')->selectRaw('count(kelurahan) as total, kelurahan')
+        $totalPendaftarWilayah = CalonSiswa::groupBy('kelurahan')->selectRaw('count(kelurahan) as total, kelurahan')
             ->get();
 
 

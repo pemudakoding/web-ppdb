@@ -26,4 +26,10 @@ route::get('logouts', function () {
 Route::prefix('administrator-' . date('d'))->group(function () {
     Route::get('', 'Admin\DashboardController@index')->middleware('can:ppdb')->name('admin.dashboard');
     Auth::routes(['register' => false]);
+
+    /**
+     * PESERTA_DIDIK ROUTE
+     */
+
+    Route::resource('calon-peserta', 'Admin\PesertaController', ['except' => ['store', 'create']]);
 });
