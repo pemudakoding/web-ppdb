@@ -10,7 +10,7 @@
     {{-- ALERT --}}
     @include('components.admin.alert')
     {{-- END ALERT --}}
-
+    <a href="{{route('calon-peserta.updateStatusAll')}}" class="btn btn-info mb-3 btn-sm">Terima Semua</a>
     <div class="card">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">Pendaftar</h6>
@@ -20,6 +20,11 @@
                 <a href="{{route('calon-peserta.index')}}?status=Diterima" class="btn btn-success ml-1 btn-sm">Diterima</a>
                 <a href="{{route('calon-peserta.index')}}?status=Ditolak" class="btn btn-danger ml-1 btn-sm">Ditolak</a>
             </div>
+            <form>
+                <div class="form-group m-0" method="GET">
+                    <input type="text" class="form-control form-control-sm" name="search" placeholder="Nomor Pendaftaran">
+                </div>
+            </form>
         </div>
         <div class="table-responsive">
             <table class="table align-items-center table-flush">

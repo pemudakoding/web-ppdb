@@ -31,9 +31,10 @@ Route::prefix('administrator-' . date('d'))->group(function () {
     /**
      * EXPORT DATA ROUTE
      */
-    Route::get('calon-peserta/export/zona', 'Admin\ExportController@ExportDataZona')->name('exports.zona');
-    Route::get('calon-peserta/export/non-zona', 'Admin\ExportController@ExportDataNonZona')->name('exports.non-zona');
-    Route::get('calon-peserta/export/all', 'Admin\ExportController@ExportAll')->name('exports.all');
+    Route::get('calon-peserta/export/zona', 'Admin\ExportController@ExportDataZona')->middleware('can:ppdb')->name('exports.zona');
+    Route::get('calon-peserta/export/non-zona', 'Admin\ExportController@ExportDataNonZona')->middleware('can:ppdb')->name('exports.non-zona');
+    Route::get('calon-peserta/export/all', 'Admin\ExportController@ExportAll')->middleware('can:ppdb')->name('exports.all');
+    Route::get('calon-peserta/set-status/all', 'Admin\PesertaController@setApproveAll')->name('calon-peserta.updateStatusAll');
     Route::get('calon-peserta/set-status/{nomor_pendaftaran}', 'Admin\PesertaController@setStatus')->name('calon-peserta.updateStatus');
     Route::resource('calon-peserta', 'Admin\PesertaController', ['except' => ['store', 'create']]);
 });

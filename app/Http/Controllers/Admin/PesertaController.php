@@ -28,6 +28,8 @@ class PesertaController extends Controller
 
         if ($request->has('status')) {
             $peserta = $peserta->where('status', $request->query('status'));
+        } else if ($request->has('search')) {
+            $peserta = $peserta->where('nomor_pendaftaran', $request->query('search'));
         }
 
 
@@ -111,6 +113,20 @@ class PesertaController extends Controller
         }
     }
 
+    public function setApproveAll()
+    {
+        $data = CalonSiswa::where("status", '!=', 'Diterima');
+
+
+        if ($data->update(['status' => 'Diterima'])) {
+            return redirect()->back()->with([
+                'alert' => [
+                    'type'    => 'success',
+                    'message' => "Sukses mengubah semua status menjadi Diterima"
+                ]
+            ]);
+        }
+    }
     /**
      * Remove the specified resource from storage.
      *
