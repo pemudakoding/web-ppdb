@@ -9,8 +9,7 @@ use App\Models\CalonSiswa;
 use App\Models\ZonaSekolah;
 
 use App\Helpers\WebHelper;
-
-
+use App\Http\Requests\RegisterRequest;
 
 class PublicController extends Controller
 {
@@ -56,27 +55,9 @@ class PublicController extends Controller
         }
     }
 
-    public function store(Request $request)
+    public function store(RegisterRequest $request)
     {
-        $request->validate([
-            'nama_asli' => 'required|string',
-            'nama_panggilan' => 'required|string',
-            'tanggal_lahir' => 'required|string',
-            'bulan_lahir'   => 'required|string',
-            'tahun_lahir'   => 'required|string',
-            'jenis_kelamin' => 'required|in:Laki-Laki,Perempuan',
-            'agama'     => 'required|in:Islam,Kristen,Katolik,Hindu,Budha,Khong Hu Cu',
-            'kelurahan' => 'required|string|exists:zona_sekolahs,nama_zona',
-            'kelurahan_lainnya' => 'nullable|string',
-            'alamat' => 'required|string',
-            'nisn'  => 'required|min:10|max:10|unique:calon_siswas',
-            'nik'   => 'required|min:16|max:16|unique:calon_siswas',
-            'no_kk' => 'required|min:16|max:16',
-            'no_hp' => 'required|string',
-            'sekolah_asal'   => 'required|string',
-            'status_sekolah' => 'required|in:Negeri,Swasta',
-            'nomor_btq' => 'nullable'
-        ]);
+
 
         $data = $request->except(['tanggal_lahir', 'bulan_lahir', 'tahun_lahir', 'kelurahan', 'kelurahan_lainnya']);
         $data['tanggal_lahir']     = $request->tanggal_lahir . '-' . $request->bulan_lahir . '-' . $request->tahun_lahir;

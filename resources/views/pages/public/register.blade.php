@@ -10,8 +10,26 @@
 </section>
 <section id='form' class="bg-blue-50 pb-48 ">
     <div class="container mx-auto  md:px-32 ">
+
         <section id="form-register" class="relative flex justify-center h-full">
             <section id="siswa" class="py-8 px-5 w-11/12 md:w-3/4  mx-auto shadow-lg bg-white rounded-md absolute -mt-16">
+                @if (Session::has('errors'))
+                    <div class="px-3  mb-4">
+                        <div class="alert bg-red-400 px-5 py-4">
+                            <h3 class="font-fredoka text-white text-lg">Opps ada kesalahan pada form !!!</h3>
+                            @error('nisn')
+                                <p class="mt-3 text-white text-sm">
+                                    *{{$message}}
+                                </p>
+                            @enderror
+                            @error('nik')
+                                <p class="mt-3 text-white text-sm">
+                                    *{{$message}}
+                                </p>
+                            @enderror
+                        </div>
+                    </div>
+                @endif
                 <form action="{{route('register.store')}}" method="POST">
                     @csrf
                     @include('components.alert')
@@ -24,7 +42,8 @@
                                 class="appearance-none block w-full bg-gray-200 text-gray-700  rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
                                 type="text"
                                 name="nama_asli"
-                                id="nama_asli">
+                                id="nama_asli"
+                                value="{{old('nama_asli') ?? ''}}">
                         </div>
                         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                             <label for="nama_panggilan" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
@@ -34,7 +53,8 @@
                                 class="appearance-none block w-full bg-gray-200 text-gray-700  rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
                                 type="text"
                                 name="nama_panggilan"
-                                id="nama_panggilan">
+                                id="nama_panggilan"
+                                value="{{old('nama_panggilan') ?? ''}}">
                         </div>
                     </div>
                     <div class="md:flex mb-5">
@@ -49,7 +69,11 @@
                                     name="tanggal_lahir">
                                     <option value="">Pilih Tanggal</option>
                                     @for ($i = 1; $i <= 31; $i++)
-                                        <option value="{{str_pad($i,2,'0',STR_PAD_LEFT)}}">{{str_pad($i,2,'0',STR_PAD_LEFT)}}</option>
+                                        @if ((old('tanggal_lahir') ?? '') == $i)
+                                            <option value="{{str_pad($i,2,'0',STR_PAD_LEFT)}}" selected>{{str_pad($i,2,'0',STR_PAD_LEFT)}}</option>
+                                        @else
+                                            <option value="{{str_pad($i,2,'0',STR_PAD_LEFT)}}">{{str_pad($i,2,'0',STR_PAD_LEFT)}}</option>
+                                        @endif
                                     @endfor
                                 </select>
                                 <div
@@ -74,7 +98,11 @@
                                     class="bulan_lahir">
                                     <option value="">Pilih Bulan</option>
                                     @foreach ($month as $row)
-                                        <option value="{{str_pad($loop->iteration,2,'0',STR_PAD_LEFT)}}">{{$row}}</option>
+                                        @if ((old('bulan_lahir') ?? '') == $loop->iteration)
+                                            <option value="{{str_pad($loop->iteration,2,'0',STR_PAD_LEFT)}}" selected>{{$row}}</option>
+                                        @else
+                                            <option value="{{str_pad($loop->iteration,2,'0',STR_PAD_LEFT)}}">{{$row}}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                                 <div
@@ -99,7 +127,11 @@
                                     name="tahun_lahir">
                                     <option value="">Pilih Tahun</option>
                                     @for ($i = date('Y'); $i > 1930; $i--)
-                                        <option value="{{$i}}">{{$i}}</option>
+                                        @if ((old('tahun_lahir') ?? '') == $i)
+                                            <option value="{{$i}}" selected>{{$i}}</option>
+                                        @else
+                                            <option value="{{$i}}">{{$i}}</option>
+                                        @endif
                                     @endfor
                                 </select>
                                 <div
@@ -125,8 +157,8 @@
                                     id="jenis_kelamin"
                                     name="jenis_kelamin">
                                     <option value="">Pilih Jenis Kelamin</option>
-                                    <option value="Laki-Laki">Laki-Laki</option>
-                                    <option value="Perempuan">Perempuan</option>
+                                    <option value="Laki-Laki" @if((old('jenis_kelamin') ??'') == 'Laki-Laki') selected @endif>Laki-Laki</option>
+                                    <option value="Perempuan" @if((old('jenis_kelamin') ??'') == 'Perempuan') selected @endif>Perempuan</option>
                                 </select>
                                 <div
                                     class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -149,12 +181,12 @@
                                     id="agama"
                                     name="agama">
                                     <option value="">Pilih Agama</option>
-                                    <option value="Islam">Islam</option>
-                                    <option value="Kristen">Kristen</option>
-                                    <option value="Katolik">Katolik</option>
-                                    <option value="Hindu">Hindu</option>
-                                    <option value="Budha">Budha</option>
-                                    <option value="Khong Hu Cu">Khong Hu Cu</option>
+                                    <option value="Islam" @if((old('agama') ??'') == 'Islam') selected @endif>Islam</option>
+                                    <option value="Kristen" @if((old('agama') ??'') == 'Kristen') selected @endif>Kristen</option>
+                                    <option value="Katolik" @if((old('agama') ??'') == 'Katolik') selected @endif>Katolik</option>
+                                    <option value="Hindu" @if((old('agama') ??'') == 'Hindu') selected @endif>Hindu</option>
+                                    <option value="Budha" @if((old('agama') ??'') == 'Budha') selected @endif>Budha</option>
+                                    <option value="Khong Hu Cu" @if((old('agama') ??'') == 'Khong Hu Cu') selected @endif>Khong Hu Cu</option>
                                 </select>
                                 <div
                                     class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -204,7 +236,8 @@
                                 class="appearance-none block w-full bg-gray-200 text-gray-700  rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
                                 type="text"
                                 name="alamat"
-                                id="alamat">
+                                id="alamat"
+                                value="{{old('alamat') ?? ''}}">
                         </div>
                     </div>
                     <div class="md:flex mb-2">
@@ -217,7 +250,8 @@
                                 class="appearance-none block w-full bg-gray-200 text-gray-700  rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
                                 type="text"
                                 name="nisn"
-                                id="nisn">
+                                id="nisn"
+                                value="{{old('nisn') ?? ''}}">
                         </div>
                         <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -228,7 +262,8 @@
                                 class="appearance-none block w-full bg-gray-200 text-gray-700  rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
                                 type="text"
                                 name="nik"
-                                id="nik">
+                                id="nik"
+                                value="{{old('nik') ?? ''}}">
                         </div>
                         <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -239,7 +274,8 @@
                                 class="appearance-none block w-full bg-gray-200 text-gray-700  rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
                                 type="text"
                                 name="no_kk"
-                                id="no_kk">
+                                id="no_kk"
+                                value="{{old('no_kk') ?? ''}}">
                         </div>
                     </div>
                     <div class="md:flex mb-2">
@@ -252,7 +288,8 @@
                                 class="appearance-none block w-full bg-gray-200 text-gray-700  rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
                                 type="text"
                                 name="no_hp"
-                                id="no_hp">
+                                id="no_hp"
+                                value="{{old('no_hp') ?? ''}}">
                         </div>
                     </div>
                     <div class="md:flex mb-5">
@@ -265,7 +302,8 @@
                                 class="appearance-none block w-full bg-gray-200 text-gray-700  rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
                                 type="text"
                                 name="sekolah_asal"
-                                id="sekolah_asal">
+                                id="sekolah_asal"
+                                value="{{old('sekolah_asal') ?? ''}}">
                         </div>
                         <div class="w-full md:w-1/1 px-3 mb-6 md:mb-0 relative">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
