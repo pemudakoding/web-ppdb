@@ -17,28 +17,19 @@ class DashboardController extends Controller
     public function index()
     {
         $webInformation = WebHelper::public();
-        $totalRegister  = CalonSiswa::whereIn('kelurahan', function ($query) {
-            $query->select('nama_zona')
-                ->from('zona_sekolahs');
-        })->count();
-        $totalDiterima  = CalonSiswa::whereIn('kelurahan', function ($query) {
-            $query->select('nama_zona')
-                ->from('zona_sekolahs');
-        })->where('status', 'Diterima')->count();
-        $totalMale    = CalonSiswa::whereIn('kelurahan', function ($query) {
-            $query->select('nama_zona')
-                ->from('zona_sekolahs');
-        })->where('jenis_kelamin', 'Laki-Laki')->count();
-        $totalFemale  = CalonSiswa::whereIn('kelurahan', function ($query) {
-            $query->select('nama_zona')
-                ->from('zona_sekolahs');
-        })->where('jenis_kelamin', 'Perempuan')->count();
 
-        $totalPendaftarWilayah = CalonSiswa::whereIn('kelurahan', function ($query) {
-            $query->select('nama_zona')
-                ->from('zona_sekolahs');
-        })->groupBy('kelurahan')->selectRaw('count(kelurahan) as total, kelurahan')
-            ->orderBy('total', 'desc')->get();
+
+
+
+
+        $totalRegister       = CalonSiswa::count();
+        $totalDiterima       = CalonSiswa::where('status', 'Diterima')->count();
+        $totalMale           = CalonSiswa::where('jenis_kelamin', 'Laki-Laki')->count();
+        $totalFemale         = CalonSiswa::where('jenis_kelamin', 'Perempuan')->count();
+        $totalPendaftarAgama = CalonSiswa::groupBy('agama')->selectRaw('count(agama) as total, agama')
+            ->get();
+        $totalPendaftarWilayah = CalonSiswa::groupBy('kelurahan')->selectRaw('count(kelurahan) as total, kelurahan')
+            ->get();
 
 
 
@@ -48,6 +39,7 @@ class DashboardController extends Controller
             'totalMale' => $totalMale,
             'totalFemale' => $totalFemale,
             'totalPendaftarWilayah' => $totalPendaftarWilayah,
+            'totalPendaftarAgama' => $totalPendaftarAgama,
             'webInformation' => $webInformation
         ]);
     }

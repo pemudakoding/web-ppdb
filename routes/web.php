@@ -20,9 +20,6 @@ Route::get('/cetak/{no_pendaftaran}', 'PublicController@cetakPsb')->name('regist
 Route::get('/register-info', 'PublicController@checkRegister')->name('register.info');
 Route::POST('/register-info', 'PublicController@getRegisterData')->name('register.getData');
 
-route::get('logouts', function () {
-    Auth::logout();
-});
 Route::prefix('administrator-' . date('d'))->group(function () {
     Route::get('', 'Admin\DashboardController@index')->middleware('can:ppdb')->name('admin.dashboard');
     Auth::routes(['register' => false]);
@@ -31,5 +28,12 @@ Route::prefix('administrator-' . date('d'))->group(function () {
      * PESERTA_DIDIK ROUTE
      */
 
+    /**
+     * EXPORT DATA ROUTE
+     */
+    Route::get('calon-peserta/export/zona', 'Admin\ExportController@ExportDataZona')->name('exports.zona');
+    Route::get('calon-peserta/export/non-zona', 'Admin\ExportController@ExportDataNonZona')->name('exports.non-zona');
+    Route::get('calon-peserta/export/all', 'Admin\ExportController@ExportAll')->name('exports.all');
+    Route::get('calon-peserta/set-status/{nomor_pendaftaran}', 'Admin\PesertaController@setStatus')->name('calon-peserta.updateStatus');
     Route::resource('calon-peserta', 'Admin\PesertaController', ['except' => ['store', 'create']]);
 });

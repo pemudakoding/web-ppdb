@@ -87,6 +87,30 @@ class PesertaController extends Controller
         //
     }
 
+    public function setStatus(Request $request, $nomor_pendaftaran)
+    {
+        $request->validate([
+            'set_status' => 'required|in:terima,tolak'
+        ]);
+
+        $data = CalonSiswa::where('nomor_pendaftaran', $nomor_pendaftaran)->firstOrFail();
+
+        if ($request->set_status == 'terima') {
+            $data->status = 'Diterima';
+        } else {
+            $data->status = 'Ditolak';
+        }
+
+        if ($data->save()) {
+            return redirect()->back()->with([
+                'alert' => [
+                    'type'    => 'success',
+                    'message' => "Sukses mengubah status <b>$data->nama_asli</b>"
+                ]
+            ]);
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      *

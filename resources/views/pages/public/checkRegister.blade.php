@@ -10,8 +10,7 @@
                 <p class="close absolute right-0 top-0 mt-3 mr-4 font-bold cursor-pointer text-xl">X</p>
                 <h3 class="font-bold">Sukses mengambil Informasi <br> {{Session::get('data_pendaftar')->nama_asli}}</h3>
                 <p class="mt-4">
-                    Silahkan liat informasi yang diambil di sebelah kanan bawah jika menggunakan Laptop,
-                    Jika menggunakan Handphone silahkan lihat di bagian bawah
+                    Silahkan liat informasi yang diambil di bagian atas statistik
                 </p>
             </div>
         </div>
@@ -49,7 +48,40 @@
     </div>
 </section>
 <section id="info-pendaftar" class="pb-16">
-    <main class="container mx-auto py-12  flex flex-wrap lg:flex-row">
+    @if (Session::get('data_pendaftar') != NULL)
+            <main class="container mx-auto py-12">
+                <div class="w-full lg:w-1/2 px-4">
+                    <section class="bg-white shadow-lg  rounded-md py-5 px-8 ">
+                        <header>
+                            <h3 class="text-gray-600 font-bold text-xl text-center">No Pendaftaran: <span class="text-blue-600">{{Session::get('data_pendaftar')->nomor_pendaftaran}}</span></h3>
+                        </header>
+                        <hr class="w-full border border-gray-300 my-3">
+                        <main class="flex justify-start text-gray-600 mt-5">
+                            <table>
+                                <tr>
+                                    <td class="font-bold">Nama</td>
+                                    <td>:</td>
+                                    <td>{{Session::get('data_pendaftar')->nama_asli}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold py-2">Status</td>
+                                    <td>:</td>
+                                    @if (Session::get('data_pendaftar')->status == 'Pending')
+                                        <td class="text-yellow-600">Masih di Proses</td>
+                                    @elseif (Session::get('data_pendaftar')->status == 'Diterima')
+                                        <td class="text-green-600">{{Session::get('data_pendaftar')->status}}</td>
+                                    @else
+                                        <td class="text-red-600">{{Session::get('data_pendaftar')->status}}</td>
+                                    @endif
+
+                                </tr>
+                            </table>
+                        </main>
+                    </section>
+                </div>
+            </main>
+    @endif
+    <main class="container mx-auto @if(!Session::has('data_pendaftar')) py-12 @endif  flex flex-wrap lg:flex-row">
         <div class="w-full md:w-1/2 lg:w-1/4 px-4 mb-4 md:mb-lg">
             <section class="bg-white shadow-lg rounded-md py-5 px-8 flex justify-between items-center">
                 <header>
@@ -100,37 +132,10 @@
         <div class="w-full lg:w-1/2  px-4">
             <div id="register_statistik" style="height: 300px; width:100%" class="bg-white rounded-md py-5 shadow-md"></div>
         </div>
-        @if (Session::get('data_pendaftar') != NULL)
-            <div class="w-full lg:w-1/2 px-4 mt-16 lg:mt-0">
-                <section class="bg-white shadow-lg  rounded-md py-5 px-8 ">
-                    <header>
-                        <h3 class="text-gray-600 font-bold text-xl text-center">No Pendaftaran: <span class="text-blue-600">{{Session::get('data_pendaftar')->nomor_pendaftaran}}</span></h3>
-                    </header>
-                    <hr class="w-full border border-gray-300 my-3">
-                    <main class="flex justify-start text-gray-600 mt-5">
-                        <table>
-                            <tr>
-                                <td class="font-bold">Nama</td>
-                                <td>:</td>
-                                <td>{{Session::get('data_pendaftar')->nama_asli}}</td>
-                            </tr>
-                            <tr>
-                                <td class="font-bold py-2">Status</td>
-                                <td>:</td>
-                                @if (Session::get('data_pendaftar')->status == 'Pending')
-                                    <td class="text-yellow-600">Masih di Proses</td>
-                                @elseif (Session::get('data_pendaftar')->status == 'Diterima')
-                                    <td class="text-green-600">{{Session::get('data_pendaftar')->status}}</td>
-                                @else
-                                    <td class="text-red-600">{{Session::get('data_pendaftar')->status}}</td>
-                                @endif
+        <div class="w-full lg:w-1/2  mt-16 lg:mt-0   px-4">
+            <div id="register_statistik_agama" style="height: 300px; width:100%" class="bg-white rounded-md py-5 shadow-md"></div>
+        </div>
 
-                            </tr>
-                        </table>
-                    </main>
-                </section>
-            </div>
-        @endif
     </main>
 </section>
 @endsection
@@ -146,7 +151,7 @@
                 }
     </script>
     <script>
-        var chart = new CanvasJS.Chart("register_statistik", {
+    var chart = new CanvasJS.Chart("register_statistik", {
 	animationEnabled: true,
 	theme: "light2", // "light1", "light2", "dark1", "dark2"
 	title: {
@@ -154,7 +159,30 @@
 	},
 	axisY: {
 		suffix: "   Pendaftar",
-		includeZero: true
+		includeZero: true,
+        interval: 1
+	},
+	data: [{
+		type: "column",
+		yValueFormatString: "#\" Pendaftar\"",
+		dataPoints: [
+            @foreach ($totalPendaftarWilayah as $zona)
+			{!! '{ label: "'.$zona->kelurahan.'", y:'.$zona->total.' }' !!},
+            @endforeach
+		]
+	}]
+});
+
+var chart_agama = new CanvasJS.Chart("register_statistik_agama", {
+	animationEnabled: true,
+	theme: "light2", // "light1", "light2", "dark1", "dark2"
+	title: {
+		text: "Pendaftar Berdasarkan Agama - 2020",
+	},
+	axisY: {
+		suffix: "   Pendaftar",
+		includeZero: true,
+        interval: 1
 	},
 	data: [{
 		type: "column",
@@ -167,5 +195,6 @@
 	}]
 });
 chart.render();
+chart_agama.render();
     </script>
 @endpush
