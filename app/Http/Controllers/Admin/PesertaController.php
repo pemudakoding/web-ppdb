@@ -29,13 +29,14 @@ class PesertaController extends Controller
         if ($request->has('status')) {
             $peserta = $peserta->where('status', $request->query('status'));
         } else if ($request->has('search')) {
-            $peserta = $peserta->where('nomor_pendaftaran', $request->query('search'));
+            $peserta = $peserta->where('nomor_pendaftaran', $request->query('search'))
+                ->orWhere('nama_asli', 'like', '%' . $request->query('search') . '%');
         }
 
 
         $peserta = $peserta->orderBy('nomor_pendaftaran')->paginate(10);
 
-        return view('pages.admin.dashboard.peserta_didik.index')->with([
+        return view('pages.admin.peserta_didik.index')->with([
             'peserta' => $peserta,
             'webInformation' => $webInformation
         ]);

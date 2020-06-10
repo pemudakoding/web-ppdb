@@ -16,6 +16,11 @@
             <i class="fas fa-user-graduate"></i>
             <span>Calon Peserta Didik</span></a>
     </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{{route('zona.index')}}">
+            <i class="fas fa-map-marked-alt"></i>
+            <span>Zona Sekolah</span></a>
+    </li>
     <hr class="sidebar-divider">
     <div class="sidebar-heading">
         Modul Export

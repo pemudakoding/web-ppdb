@@ -22,7 +22,7 @@
             </div>
             <form>
                 <div class="form-group m-0" method="GET">
-                    <input type="text" class="form-control form-control-sm" name="search" placeholder="Nomor Pendaftaran">
+                    <input type="text" class="form-control form-control-sm" name="search" placeholder="Nomor/Nama Pendaftar">
                 </div>
             </form>
         </div>
