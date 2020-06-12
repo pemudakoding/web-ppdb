@@ -4,7 +4,8 @@
 <section id="hero">
     <div class="container mx-auto">
         <section class="h-56 flex justify-center box-border pt-16">
-            <h1 class="text-3xl font-fredoka text-white">Form Pendaftaran</h1>
+            <h1 class="text-3xl font-fredoka text-white">Form Pendaftaran <span class="hidden border-red-400"></span></h1>
+
         </section>
     </div>
 </section>

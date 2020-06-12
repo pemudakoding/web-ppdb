@@ -62,7 +62,7 @@ submitBtn.onclick = (element) => {
     const select = document.querySelectorAll('select');
 
     input.forEach(input => {
-        if (input.value == '') {
+        if (input.value == '' && input.name != 'nomor_btq') {
             element.preventDefault();
 
             input.classList.add('border');
