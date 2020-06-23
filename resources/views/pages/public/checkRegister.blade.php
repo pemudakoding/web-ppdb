@@ -188,8 +188,8 @@ var chart_agama = new CanvasJS.Chart("register_statistik_agama", {
 		type: "column",
 		yValueFormatString: "#\" Pendaftar\"",
 		dataPoints: [
-            @foreach ($totalPendaftarWilayah as $zona)
-			{!! '{ label: "'.$zona->kelurahan.'", y:'.$zona->total.' }' !!},
+            @foreach ($totalPendaftarAgama as $agama)
+			{!! '{ label: "'.$agama->agama.'", y:'.$agama->total.' }' !!},
             @endforeach
 		]
 	}]

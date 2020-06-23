@@ -211,7 +211,7 @@
                                     class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-gray-500"
                                     id="kelurahan"
                                     name="kelurahan">
-                                    <option>Pilih Kelurahan</option>
+                                    <option value="">Pilih Kelurahan</option>
                                     @foreach ($zonaSekolah as $zona)
                                         <option value="{{$zona->nama_zona}}">{{$zona->nama_zona}}</option>
                                     @endforeach

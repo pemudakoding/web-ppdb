@@ -18,10 +18,6 @@ class DashboardController extends Controller
     {
         $webInformation = WebHelper::public();
 
-
-
-
-
         $totalRegister       = CalonSiswa::count();
         $totalDiterima       = CalonSiswa::where('status', 'Diterima')->count();
         $totalMale           = CalonSiswa::where('jenis_kelamin', 'Laki-Laki')->count();

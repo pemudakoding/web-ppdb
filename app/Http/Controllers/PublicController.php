@@ -62,7 +62,8 @@ class PublicController extends Controller
         $data = $request->except(['tanggal_lahir', 'bulan_lahir', 'tahun_lahir', 'kelurahan', 'kelurahan_lainnya']);
         $data['tanggal_lahir']     = $request->tanggal_lahir . '-' . $request->bulan_lahir . '-' . $request->tahun_lahir;
         $data['nomor_pendaftaran'] = WebHelper::getRegisterNumber();
-
+        $data['status'] = 'Pending';
+        
         if ($request->has('kelurahan_lainnya'))
             $data['kelurahan'] = $request->kelurahan_lainnya;
         else
@@ -134,6 +135,7 @@ class PublicController extends Controller
             'totalMale' => $totalMale,
             'totalFemale' => $totalFemale,
             'totalPendaftarWilayah' => $totalPendaftarWilayah,
+            'totalPendaftarAgama' => $totalPendaftarAgama
 
         ]);
     }
